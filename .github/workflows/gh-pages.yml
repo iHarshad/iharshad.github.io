@@ -3,8 +3,7 @@ name: Deploy Hugo site to Github Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches:
-      - [$default-branch]
+    branches: [$default-branch]
     paths-ignore:
       - "LICENSE"
       - "README.md"
