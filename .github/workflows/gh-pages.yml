@@ -1,0 +1,42 @@
+name: github pages
+
+on:
+  push:
+    branches:
+      - master  # Set a branch that will trigger a deployment
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.97.0'
+          extended: true
+
+      # - name: Update domain name
+      #   uses: jacobtomlinson/gha-find-replace@v2
+      #   with:
+      #     find: baseURL: "/"
+      #     replace: baseURL: "iharshad.github.io"
+      #     include: "config.yaml" # Will match all README.md files in any nested directory
+
+      - name: Build
+        run: hugo --cleanDestinationDir --destination="dist" --enableGitInfo=false --templateMetrics --templateMetricsHints --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        # If you're changing the branch from main,
+        # also change the `main` in `refs/heads/main`
+        # below accordingly.
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
