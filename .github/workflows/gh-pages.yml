@@ -3,17 +3,11 @@ name: Deploy Hugo site to Github Pages
 on:
   push:
     branches: [$default-branch]
-    paths-ignore:
-      - "LICENSE"
-      - "README.md"
+
   pull_request:
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  # inputs:
-  #   hugoVersion:
-  #     description: "Hugo Version"
-  #     required: false
-  #     default: "0.97.0"
 
 # Default to bash
 defaults:
@@ -53,9 +47,6 @@ jobs:
           find: 'baseURL: "/"'
           replace: 'baseURL: "https://iharshad.github.io"'
           include: 'config.yaml' # Will match all README.md files in any nested directory
-      - name: check 'config.yaml'
-        run: |
-          head config.yaml
 
       - name: Build static site
         run: hugo --cleanDestinationDir --destination="dist" --enableGitInfo=true --templateMetrics --templateMetricsHints --minify
