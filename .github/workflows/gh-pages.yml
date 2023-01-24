@@ -3,6 +3,9 @@ name: Deploy Hugo site to Github Pages
 on:
   push:
     branches: [$default-branch]
+    paths-ignore:
+      - "LICENSE"
+      - "README.md"
 
   pull_request:
 
@@ -49,7 +52,13 @@ jobs:
           include: 'config.yaml' # Will match all README.md files in any nested directory
 
       - name: Build static site
-        run: hugo --cleanDestinationDir --destination="dist" --enableGitInfo=true --templateMetrics --templateMetricsHints --minify
+        run: hugo \
+          --cleanDestinationDir \
+          --destination="dist" \
+          --enableGitInfo=true \
+          --templateMetrics \
+          --templateMetricsHints \
+          --minify
 
       - name: Deploy static site
         uses: peaceiris/actions-gh-pages@v3.9.2
