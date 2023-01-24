@@ -30,19 +30,19 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
       - name: Setup Hugo binaries
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v2.6.0
         with:
           hugo-version: '0.97.0'
           extended: true
 
       - name: Update domain name in config file
-        uses: jacobtomlinson/gha-find-replace@v2
+        uses: jacobtomlinson/gha-find-replace@v2.0.0
         with:
           find: 'baseURL: "/"'
           replace: 'baseURL: "https://iharshad.github.io"'
@@ -52,7 +52,7 @@ jobs:
         run: hugo --cleanDestinationDir --destination="dist" --enableGitInfo=true --templateMetrics --templateMetricsHints --minify
 
       - name: Deploy static site
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3.9.2
         # If you're changing the branch from main,
         # also change the `main` in `refs/heads/main`
         # below accordingly.

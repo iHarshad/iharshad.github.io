@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://iharshad.github.io/sitemap.xml
