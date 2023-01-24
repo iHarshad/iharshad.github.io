@@ -45,7 +45,7 @@ jobs:
           extended: true
 
       - name: Update domain name in config file
-        uses: jacobtomlinson/gha-find-replace@v2.0
+        uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: 'baseURL: "/"'
           replace: 'baseURL: "https://iharshad.github.io"'
