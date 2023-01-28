@@ -60,7 +60,7 @@ jobs:
       - name: Build static site
         run: |
           hugo \
-            --baseURL $fqdn
+            --baseURL $fqdn \
             --cleanDestinationDir \
             --destination="dist" \
             --enableGitInfo=true \
