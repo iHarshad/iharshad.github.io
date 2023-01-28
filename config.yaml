@@ -12,7 +12,7 @@ menu:
       url: /about/
       weight: '-110'
     - identifier: posts
-      name: Post
+      name: Posts
       url: /posts/
       weight: -200
 
