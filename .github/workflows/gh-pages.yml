@@ -54,6 +54,9 @@ jobs:
           replace: 'baseURL: "https://iharshad.github.io"'
           include: 'config.yaml' # Will match all README.md files in any nested directory
 
+      - name: Set debug options
+        run: set -euo
+
       - name: Build static site
         run: |
           hugo \
