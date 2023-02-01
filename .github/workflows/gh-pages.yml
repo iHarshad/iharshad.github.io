@@ -128,6 +128,7 @@ jobs:
 
       - name: build json
         run: |
+          mkdir -p ./dist/meta
           cat <<EOF > ./dist/meta/index.html
           {
             "date_info":"${{ needs.build.outputs.date_info }}",
