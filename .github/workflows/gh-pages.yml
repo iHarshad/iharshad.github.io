@@ -36,7 +36,11 @@ jobs:
   build-deploy:
     runs-on: ubuntu-22.04
     outputs:
-      website_info: ${{ steps.step4.outputs.website_info }}
+      date_info: ${{ steps.step4.outputs.date_info }}
+      branch_info: ${{ steps.step4.outputs.branch_info }}
+      commit_info: ${{ steps.step4.outputs.commit_info }}
+      author_info: ${{ steps.step4.outputs.author_info }}
+      message_info: ${{ steps.step4.outputs.message_info }}
     steps:
       - name: Checkout code
         id: step1
@@ -75,13 +79,18 @@ jobs:
       - name: Get VCS info
         id: step4
         run: |
-          website_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
-          echo "website_info=${website_info}" >> $GITHUB_OUTPUT
-          # git log --max-count=1 --pretty=format:"%d" >> $env:WEBSITE_BRANCH_INFO
-          # git log --max-count=1 --pretty=format:"%H" >> $env:WEBSITE_COMMIT_INFO
-          # git log --max-count=1 --pretty=format:"%an <%ae>" >> $env:WEBSITE_AUTHOR_INFO
-          # git log --max-count=1 --pretty=format:"%ad" >> $env:WEBSITE_DATE_INFO
-          # git log --max-count=1 --pretty=format:"%s" >> $env:WEBSITE_MESSAGE_INFO
+          # website_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          # echo "website_info=${website_info}" >> $GITHUB_OUTPUT
+          date_info=`git log --max-count=1 --pretty=format:"%d"`
+          echo "date_info=${date_info}" >> $GITHUB_OUTPUT
+          branch_info=`git log --max-count=1 --pretty=format:"%H"`
+          echo "branch_info=${branch_info}" >> $GITHUB_OUTPUT
+          commit_info=`git log --max-count=1 --pretty=format:"%an <%ae>"`
+          echo "commit_info=${commit_info}" >> $GITHUB_OUTPUT
+          author_info=`git log --max-count=1 --pretty=format:"%ad"`
+          echo "author_info=${author_info}" >> $GITHUB_OUTPUT
+          message_info=`git log --max-count=1 --pretty=format:"%s"`
+          echo "message_info=${message_info}" >> $GITHUB_OUTPUT
 
       # - name: Save commit to file
       #   id: step5
