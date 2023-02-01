@@ -84,8 +84,8 @@ jobs:
           date_info=`git log --max-count=1 --pretty=format:"%ad"`
           echo "date_info=${date_info}" >> $GITHUB_OUTPUT
 
-          branch_info=`git log --max-count=1 --pretty=format:"%d"`
-          echo -e "branch_info=${branch_info}" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' >> $GITHUB_OUTPUT
+          branch_info=`git log --max-count=1 --pretty=format:"%d" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
+          echo -e "branch_info=${branch_info}" >> $GITHUB_OUTPUT
 
           commit_info=`git log --max-count=1 --pretty=format:"%H"`
           echo "commit_info=${commit_info}" >> $GITHUB_OUTPUT
