@@ -70,13 +70,13 @@ jobs:
       - name: Get VCS info
         run: |
           set -x
-          git log --max-count=1 --pretty=format:' Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A' >> $WEBSITE_INFO
+          git log --max-count=1 --pretty=format:"%d" >> $env:WEBSITE_BRANCH_INFO
 
       - name: Save commit to file
         run: |
-          echo $WEBSITE_INFO
+          echo $WEBSITE_BRANCH_INFO
           cat <<EOF > ./dist/status.html
-          $WEBSITE_INFO
+          $WEBSITE_BRANCH_INFO
           EOF
 
       - name: Deploy static site
