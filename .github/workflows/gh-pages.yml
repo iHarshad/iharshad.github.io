@@ -75,7 +75,7 @@ jobs:
       - name: Get VCS info
         id: step4
         run: |
-          git --max-count=1 log --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" >> $GITHUB_OUTPUT
+          git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" >> $GITHUB_OUTPUT
           # git log --max-count=1 --pretty=format:"%d" >> $env:WEBSITE_BRANCH_INFO
           # git log --max-count=1 --pretty=format:"%H" >> $env:WEBSITE_COMMIT_INFO
           # git log --max-count=1 --pretty=format:"%an <%ae>" >> $env:WEBSITE_AUTHOR_INFO
