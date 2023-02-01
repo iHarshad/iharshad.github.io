@@ -101,10 +101,10 @@ jobs:
             --minify \
             --gc
 
-        - name: Create dist archive
-          run: |
-            tar -czvf dist.tar.gz dist
-            ls -alh
+      - name: Create dist archive
+        run: |
+          tar -czvf dist.tar.gz dist
+          ls -alh
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.2
