@@ -69,6 +69,7 @@ jobs:
 
       - name: Get VCS info
         run: |
+          ls -alh
           git log --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" >> $WEBSITE_INFO
 
       - name: Save commit to file
