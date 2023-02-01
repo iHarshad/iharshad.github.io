@@ -72,9 +72,9 @@ jobs:
           git log --max-count=1
           git log --max-count=1 --pretty=format:"%d" >> $env:WEBSITE_BRANCH_INFO
           git log --max-count=1 --pretty=format:"%H" >> $env:WEBSITE_COMMIT_INFO
-          git log --max-count=1 --pretty:format:"%an <%ae>" >> $env:WEBSITE_AUTHOR_INFO
-          git log --max-count=1 --pretty:format:"%ad" >> $env:WEBSITE_DATE_INFO
-          git log --max-count=1 --pretty:format:"%s" >> $env:WEBSITE_MESSAGE_INFO
+          # git log --max-count=1 --pretty=format:"%an <%ae>" >> $env:WEBSITE_AUTHOR_INFO
+          git log --max-count=1 --pretty=format:"%ad" >> $env:WEBSITE_DATE_INFO
+          git log --max-count=1 --pretty=format:"%s" >> $env:WEBSITE_MESSAGE_INFO
 
       - name: Save commit to file
         run: |
