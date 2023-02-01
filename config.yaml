@@ -4,6 +4,7 @@ title: "Harshad Parulekar"
 
 theme: "maverick"
 paginate: 3
+canonifyurls: true
 
 menu:
   main:
