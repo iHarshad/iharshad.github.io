@@ -101,10 +101,50 @@ jobs:
             --minify \
             --gc
 
+      - name: Create build archive
+        run: |
+          tar -czvf build.tar.gz dist
+
+      - name: Upload build rtifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: build.tar.gz
+          path: build.tar.gz
+          if-no-files-found: warn
+          # retention-days: 2
+
+  test:
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - name: Download build.tar.gz artifact from build job
+        uses: actions/download-artifact@v3.0.2
+        with:
+          name: build.tar.gz
+
+      - name: Extract artifact
+        run: |
+          tar -xzvf build.tar.gz
+
+      - name: build json
+        run: |
+          cat <<EOF > ./dist/meta/index.html
+          {
+            "date_info":"${{ needs.build.outputs.date_info }}",
+            "branch_info":"${{ needs.build.outputs.branch_info }}",
+            "commit_info":"${{ needs.build.outputs.commit_info }}",
+            "author_info":"${{ needs.build.outputs.author_info }}",
+            "message_info":"${{ needs.build.outputs.message_info }}"
+          }
+          EOF
+
+      - name: check json
+        run: |
+          cat ./dist/meta/index.html
+
       - name: Create dist archive
         run: |
           tar -czvf dist.tar.gz dist
-          ls -alh
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.2
@@ -112,7 +152,20 @@ jobs:
           name: dist.tar.gz
           path: dist.tar.gz
           if-no-files-found: warn
-          retention-days: 2
+          # retention-days: 2
+
+  deploy:
+    runs-on: ubuntu-22.04
+    needs: test
+    steps:
+      - name: Download dist.tar.gz artifact from test job
+        uses: actions/download-artifact@v3.0.2
+        with:
+          name: dist.tar.gz
+
+      - name: Extract artifact
+        run: |
+          tar -xzvf dist.tar.gz
 
       - name: Deploy static site
         id: step5
@@ -131,34 +184,3 @@ jobs:
           publish_branch: gh-pages
           # a source directory to deploy to GitHub Pages
           publish_dir: ./dist
-
-  test:
-    runs-on: ubuntu-22.04
-    needs: build
-    steps:
-      - name: Download dist.tar.gz artifact from build job
-        uses: actions/download-artifact@v3.0.2
-        with:
-          name: dist.tar.gz
-
-      - name: Extract artifact
-        run: |
-          tar -xzf dist.tar.gz
-
-      - name: build json
-        run: |
-          cat <<EOF > meta.html
-          {
-            "date_info":"${{ needs.build.outputs.date_info }}",
-            "branch_info":"${{ needs.build.outputs.branch_info }}",
-            "commit_info":"${{ needs.build.outputs.commit_info }}",
-            "author_info":"${{ needs.build.outputs.author_info }}",
-            "message_info":"${{ needs.build.outputs.message_info }}"
-          }
-          EOF
-      - name: check json
-        run: |
-          ls -alh
-          cat meta.html
-          ls -alh dist
-          tree -af dist
