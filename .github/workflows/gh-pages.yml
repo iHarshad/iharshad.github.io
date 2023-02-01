@@ -77,10 +77,14 @@ jobs:
 
       - name: Save commit to file
         run: |
-          echo $WEBSITE_BRANCH_INFO
+          echo $env:WEBSITE_MESSAGE_INFO
           cat <<EOF > ./dist/status.html
           abc
-          $WEBSITE_BRANCH_INFO
+          $env:WEBSITE_BRANCH_INFO
+          $env:WEBSITE_COMMIT_INFO
+          $env:WEBSITE_AUTHOR_INFO
+          $env:WEBSITE_DATE_INFO
+          $env:WEBSITE_MESSAGE_INFO
           EOF
 
       - name: Deploy static site
