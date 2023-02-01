@@ -69,6 +69,7 @@ jobs:
 
       - name: Get VCS info
         run: |
+          set -x
           ls -alh
           git remote -vv
           git log --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" >> $WEBSITE_INFO
