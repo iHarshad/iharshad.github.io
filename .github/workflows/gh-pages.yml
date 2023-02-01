@@ -72,10 +72,11 @@ jobs:
           set -x
           ls -alh
           git remote -vv
-          git log --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" >> $WEBSITE_INFO
+          git log --pretty=format:\" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A\" >> $WEBSITE_INFO
 
       - name: Save commit to file
         run: |
+          echo $WEBSITE_INFO
           cat <<EOF > ./dist/status.html
           $WEBSITE_INFO
           EOF
