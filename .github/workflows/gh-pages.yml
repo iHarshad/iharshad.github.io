@@ -111,7 +111,7 @@ jobs:
           name: build.tar.gz
           path: build.tar.gz
           if-no-files-found: warn
-          # retention-days: 2
+          retention-days: 5 # default 90 days
 
   test:
     runs-on: ubuntu-22.04
@@ -153,7 +153,7 @@ jobs:
           name: dist.tar.gz
           path: dist.tar.gz
           if-no-files-found: warn
-          # retention-days: 2
+          retention-days: 5 # default 90 days
 
   deploy:
     runs-on: ubuntu-22.04
@@ -185,3 +185,8 @@ jobs:
           publish_branch: gh-pages
           # a source directory to deploy to GitHub Pages
           publish_dir: ./dist
+          # Overwrite existing files
+          keep_files: false
+          # Set custom Git username and email
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
