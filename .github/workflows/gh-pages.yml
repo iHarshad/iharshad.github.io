@@ -81,13 +81,15 @@ jobs:
         run: |
           # website_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
           # echo "website_info=${website_info}" >> $GITHUB_OUTPUT
-          date_info=`git log --max-count=1 --pretty=format:"%d"`
+          date_info=`git log --max-count=1 --pretty=format:"%ad"`
           echo "date_info=${date_info}" >> $GITHUB_OUTPUT
-          branch_info=`git log --max-count=1 --pretty=format:"%H"`
-          echo "branch_info=${branch_info}" >> $GITHUB_OUTPUT
-          commit_info=`git log --max-count=1 --pretty=format:"%an <%ae>"`
+
+          branch_info=`git log --max-count=1 --pretty=format:"%d"`
+          echo -e "branch_info=${branch_info}" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' >> $GITHUB_OUTPUT
+
+          commit_info=`git log --max-count=1 --pretty=format:"%H"`
           echo "commit_info=${commit_info}" >> $GITHUB_OUTPUT
-          author_info=`git log --max-count=1 --pretty=format:"%ad"`
+          author_info=`git log --max-count=1 --pretty=format:"%an <%ae>"`
           echo "author_info=${author_info}" >> $GITHUB_OUTPUT
           message_info=`git log --max-count=1 --pretty=format:"%s"`
           echo "message_info=${message_info}" >> $GITHUB_OUTPUT
@@ -140,7 +142,7 @@ jobs:
             "branch_info":"${{ needs.build-deploy.outputs.branch_info }}",
             "commit_info":"${{ needs.build-deploy.outputs.commit_info }}",
             "author_info":"${{ needs.build-deploy.outputs.author_info }}",
-            "message_info":"${{ needs.build-deploy.outputs.message_info }}",
+            "message_info":"${{ needs.build-deploy.outputs.message_info }}"
           }
           EOF
       - name: check json
