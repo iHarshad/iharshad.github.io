@@ -131,3 +131,18 @@ jobs:
           echo "${{ needs.build-deploy.outputs.commit_info }}"
           echo "${{ needs.build-deploy.outputs.author_info }}"
           echo "${{ needs.build-deploy.outputs.message_info }}"
+      - name: build json
+        run: |
+          cat <<EOF > meta.html
+          {
+            date_info: ${{ needs.build-deploy.outputs.date_info }}
+            branch_info: ${{ needs.build-deploy.outputs.branch_info }}
+            commit_info: ${{ needs.build-deploy.outputs.commit_info }}
+            author_info: ${{ needs.build-deploy.outputs.author_info }}
+            message_info: ${{ needs.build-deploy.outputs.message_info }}
+          }
+          EOF
+      - name: check json
+        run: |
+          ls -alh
+          cat meta.json
