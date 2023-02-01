@@ -35,14 +35,18 @@ env:
 jobs:
   build-deploy:
     runs-on: ubuntu-22.04
+    outputs:
+      website_info: ${{ steps.step4.outputs.website_info }}
     steps:
       - name: Checkout code
+        id: step1
         uses: actions/checkout@v3.3.0
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
       - name: Setup Hugo binaries
+        id: step2
         uses: peaceiris/actions-hugo@v2.6.0
         with:
           hugo-version: '0.97.0'
@@ -56,6 +60,7 @@ jobs:
       #     include: 'config.yaml' # Will match config.yaml file only
 
       - name: Build static site
+        id: step3
         run: |
           hugo \
             --baseURL $BASE_URL \
@@ -68,26 +73,31 @@ jobs:
             --gc
 
       - name: Get VCS info
+        id: step4
         run: |
-          git log --max-count=1 --pretty=format:"%d" >> $env:WEBSITE_BRANCH_INFO
-          git log --max-count=1 --pretty=format:"%H" >> $env:WEBSITE_COMMIT_INFO
-          git log --max-count=1 --pretty=format:"%an <%ae>" >> $env:WEBSITE_AUTHOR_INFO
-          git log --max-count=1 --pretty=format:"%ad" >> $env:WEBSITE_DATE_INFO
-          git log --max-count=1 --pretty=format:"%s" >> $env:WEBSITE_MESSAGE_INFO
+          git --max-count=1 log --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" >> $GITHUB_OUTPUT
+          # git log --max-count=1 --pretty=format:"%d" >> $env:WEBSITE_BRANCH_INFO
+          # git log --max-count=1 --pretty=format:"%H" >> $env:WEBSITE_COMMIT_INFO
+          # git log --max-count=1 --pretty=format:"%an <%ae>" >> $env:WEBSITE_AUTHOR_INFO
+          # git log --max-count=1 --pretty=format:"%ad" >> $env:WEBSITE_DATE_INFO
+          # git log --max-count=1 --pretty=format:"%s" >> $env:WEBSITE_MESSAGE_INFO
 
-      - name: Save commit to file
-        run: |
-          echo $env:WEBSITE_MESSAGE_INFO
-          cat <<EOF > ./dist/status.html
-          abc
-          $env:WEBSITE_BRANCH_INFO
-          $env:WEBSITE_COMMIT_INFO
-          $env:WEBSITE_AUTHOR_INFO
-          $env:WEBSITE_DATE_INFO
-          $env:WEBSITE_MESSAGE_INFO
-          EOF
+      # - name: Save commit to file
+      #   id: step5
+
+        # run: |
+        #   echo $env:WEBSITE_MESSAGE_INFO
+        #   cat <<EOF > ./dist/status.html
+        #   abc
+        #   $env:WEBSITE_BRANCH_INFO
+        #   $env:WEBSITE_COMMIT_INFO
+        #   $env:WEBSITE_AUTHOR_INFO
+        #   $env:WEBSITE_DATE_INFO
+        #   $env:WEBSITE_MESSAGE_INFO
+        #   EOF
 
       - name: Deploy static site
+        id: step6
         uses: peaceiris/actions-gh-pages@v3.9.2
         # If you're changing the branch from main,
         # also change the `main` in `refs/heads/main`
@@ -100,3 +110,11 @@ jobs:
           commit_message: ${{ github.event.head_commit.message }}
           publish_branch: gh-pages # set a branch name to use as GitHub Pages branch
           publish_dir: ./dist # a source directory to deploy to GitHub Pages
+
+  job2:
+    runs-on: ubuntu-22.04
+    needs: build-deploy
+    steps:
+      - run: |
+          ls -alh
+          echo ${{needs.build-deploy.outputs.website_info}}
