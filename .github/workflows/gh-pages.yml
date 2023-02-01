@@ -64,6 +64,7 @@ jobs:
         id: step3
         run: |
           # Remove trailing whitespace - https://unix.stackexchange.com/a/102021
+          # Multiline output - https://stackoverflow.com/a/74232400
 
           date_info=`git log --max-count=1 --pretty=format:"%ad" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
           echo "date_info=${date_info}" >> $GITHUB_OUTPUT
@@ -100,6 +101,18 @@ jobs:
             --minify \
             --gc
 
+        - name: Create dist archive
+          run: |
+            tar -czvf dist.tar.gz dist
+            ls -alh
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: dist.tar.gz
+          path: dist.tar.gz
+          retention-days: 2
+
       - name: Deploy static site
         id: step5
         uses: peaceiris/actions-gh-pages@v3.9.2
@@ -118,10 +131,19 @@ jobs:
           # a source directory to deploy to GitHub Pages
           publish_dir: ./dist
 
-  job2:
+  test:
     runs-on: ubuntu-22.04
     needs: build
     steps:
+      - name: Download dist.tar.gz artifact from build job
+        uses: actions/download-artifact@v3.0.2
+        with:
+          name: dist.tar.gz
+
+      - name: Extract artifact
+        run: |
+          tar -xzf dist.tar.gz
+
       - name: build json
         run: |
           cat <<EOF > meta.html
