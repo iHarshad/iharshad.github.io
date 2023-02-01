@@ -145,4 +145,4 @@ jobs:
       - name: check json
         run: |
           ls -alh
-          cat meta.json
+          cat meta.html
