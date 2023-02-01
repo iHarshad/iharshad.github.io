@@ -126,5 +126,8 @@ jobs:
     needs: build-deploy
     steps:
       - run: |
-          ls -alh
-          echo ${{needs.build-deploy.outputs.website_info}}
+          echo "${{ needs.build-deploy.outputs.date_info }}"
+          echo "${{ needs.build-deploy.outputs.branch_info }}"
+          echo "${{ needs.build-deploy.outputs.commit_info }}"
+          echo "${{ needs.build-deploy.outputs.author_info }}"
+          echo "${{ needs.build-deploy.outputs.message_info }}"
