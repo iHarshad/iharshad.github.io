@@ -33,6 +33,13 @@ env:
   BASE_URL: https://iharshad.github.io
 
 jobs:
+  information:
+    name: GitHub Context
+    runs-on: ubuntu-latest
+    steps:
+      - name: Info
+        run: echo "$GITHUB_CONTEXT"
+
   build:
     runs-on: ubuntu-22.04
 
