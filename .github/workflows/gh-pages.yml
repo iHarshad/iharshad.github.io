@@ -172,7 +172,7 @@ jobs:
 
       - name: summary
         run: |
-          cat ./dist/meta/index.html | echo >> $GITHUB_STEP_SUMMARY
+          echo "$(cat ./dist/meta/index.html)" >> $GITHUB_STEP_SUMMARY
 
       - name: Create dist archive
         run: |
