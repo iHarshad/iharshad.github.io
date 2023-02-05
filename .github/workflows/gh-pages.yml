@@ -159,6 +159,7 @@ jobs:
       - name: Create workflow summary
         run: |
           echo -e "# Workflow Summary" >> $GITHUB_STEP_SUMMARY
+          echo -e "## Website Version Information" >> $GITHUB_STEP_SUMMARY
           echo -e "|   |   |" >> $GITHUB_STEP_SUMMARY
           echo -e "|---|---|" >> $GITHUB_STEP_SUMMARY
           echo -e "| date_info | ${{ needs.build.outputs.date_info }} |" >> $GITHUB_STEP_SUMMARY
@@ -176,22 +177,28 @@ jobs:
 
       - name: get info
         run: |
-            echo "---" >> $GITHUB_STEP_SUMMARY
-            echo "Get commit info" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_SHA }}" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_SHORT_SHA }}" >> $GITHUB_STEP_SUMMARY
-            echo "Get author info" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_AUTHOR }}" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_AUTHOR_NAME }}" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_AUTHOR_EMAIL }}" >> $GITHUB_STEP_SUMMARY
-            echo "Get committer info" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_COMMITTER }}" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_COMMITTER_NAME }}" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_COMMITTER_EMAIL }}" >> $GITHUB_STEP_SUMMARY
-            echo "Get message info" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_MESSAGE_SUBJECT }}" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_MESSAGE_SUBJECT_SANITIZED }}" >> $GITHUB_STEP_SUMMARY
-            echo " - ${{ env.GIT_COMMIT_MESSAGE_BODY }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "## Theme Version Information" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "Get commit info" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_SHA }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_SHORT_SHA }}" >> $GITHUB_STEP_SUMMARY
+          echo "Get author info" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_AUTHOR }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_AUTHOR_NAME }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_AUTHOR_EMAIL }}" >> $GITHUB_STEP_SUMMARY
+          echo "Get committer info" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_COMMITTER }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_COMMITTER_NAME }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_COMMITTER_EMAIL }}" >> $GITHUB_STEP_SUMMARY
+          echo "Get message info" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_MESSAGE_SUBJECT }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_MESSAGE_SUBJECT_SANITIZED }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "${{ env.GIT_COMMIT_MESSAGE_BODY }}" >> $GITHUB_STEP_SUMMARY
+          echo -e "---" >> $GITHUB_STEP_SUMMARY
+
+      - name: get info
+        run: |
+          echo -e "## Content Version Information" >> $GITHUB_STEP_SUMMARY
 
       - name: Create dist archive
         run: |
