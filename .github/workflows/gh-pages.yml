@@ -74,7 +74,6 @@ jobs:
           hugo-version: '0.97.0'
           extended: true
 
-      # - uses: rlespinasse/git-commit-data-action@1.4.0
       # use MD template - https://github.com/lmservas/hikari-x86_64/blob/afaa6ad0e5814ef46755e83a0c20b07696938c40/.github/workflows/update-readme.yml
 
       - name: Get website info
@@ -84,19 +83,24 @@ jobs:
           # Multiline output - https://stackoverflow.com/a/74232400
 
           date_info=`git log --max-count=1 --pretty=format:"%ad" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo "date_info=${date_info}" >> $GITHUB_OUTPUT
+          echo -e "date_info=${date_info}" >> $GITHUB_OUTPUT
+          echo -e "date_info=${date_info}" >> $GITHUB_STEP_SUMMARY
 
           branch_info=`git log --max-count=1 --pretty=format:"%d" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
           echo -e "branch_info=${branch_info}" >> $GITHUB_OUTPUT
+          echo -e "branch_info=${branch_info}" >> $GITHUB_STEP_SUMMARY
 
           commit_info=`git log --max-count=1 --pretty=format:"%H" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo "commit_info=${commit_info}" >> $GITHUB_OUTPUT
+          echo -e "commit_info=${commit_info}" >> $GITHUB_OUTPUT
+          echo -e "commit_info=${commit_info}" >> $GITHUB_STEP_SUMMARY
 
           author_info=`git log --max-count=1 --pretty=format:"%an < %ae >" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo "author_info=${author_info}" >> $GITHUB_OUTPUT
+          echo -e "author_info=${author_info}" >> $GITHUB_OUTPUT
+          echo -e "author_info=${author_info}" >> $GITHUB_STEP_SUMMARY
 
           message_info=`git log --max-count=1 --pretty=format:"%s" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo "message_info=${message_info}" >> $GITHUB_OUTPUT
+          echo -e "message_info=${message_info}" >> $GITHUB_OUTPUT
+          echo -e "message_info=${message_info}" >> $GITHUB_STEP_SUMMARY
 
       # - name: Update domain name in config file
       #   uses: jacobtomlinson/gha-find-replace@v2
@@ -173,27 +177,9 @@ jobs:
         run: |
           echo "$(cat ./dist/meta/index.html)" >> $GITHUB_STEP_SUMMARY
 
-      - uses: rlespinasse/git-commit-data-action@v1.4.0
-
       - name: get info
         run: |
           echo -e "## Theme Version Information" >> $GITHUB_STEP_SUMMARY
-          echo "---" >> $GITHUB_STEP_SUMMARY
-          echo "Get commit info" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_SHA }}" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_SHORT_SHA }}" >> $GITHUB_STEP_SUMMARY
-          echo "Get author info" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_AUTHOR }}" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_AUTHOR_NAME }}" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_AUTHOR_EMAIL }}" >> $GITHUB_STEP_SUMMARY
-          echo "Get committer info" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_COMMITTER }}" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_COMMITTER_NAME }}" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_COMMITTER_EMAIL }}" >> $GITHUB_STEP_SUMMARY
-          echo "Get message info" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_MESSAGE_SUBJECT }}" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_MESSAGE_SUBJECT_SANITIZED }}" >> $GITHUB_STEP_SUMMARY
-          echo -e "${{ env.GIT_COMMIT_MESSAGE_BODY }}" >> $GITHUB_STEP_SUMMARY
           echo -e "---" >> $GITHUB_STEP_SUMMARY
 
       - name: get info
