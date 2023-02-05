@@ -11,12 +11,15 @@ on:
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
+  # Allows you to curl API to trigger workflow on non-default branch
+  # /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
+  # https://stackoverflow.com/a/68148239
   workflow_dispatch:
 
   # Allows external webhook trigger
-  repository_dispatch:
-    types:
-      - webhook
+  # repository_dispatch:
+  #   types:
+  #     - webhook
 
 # Default to bash
 defaults:
@@ -38,13 +41,6 @@ env:
   BASE_URL: https://iharshad.github.io
 
 jobs:
-  information:
-    name: GitHub Context
-    runs-on: ubuntu-latest
-    steps:
-      - name: Info
-        run: echo "$GITHUB_CONTEXT"
-
   build:
     runs-on: ubuntu-22.04
 
@@ -57,7 +53,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        id: step1
+        id: step0
         uses: actions/checkout@v3.3.0
         with:
           # Fetch Hugo themes (true OR recursive)
@@ -65,12 +61,21 @@ jobs:
           # Fetch all history for .GitInfo and .Lastmod
           fetch-depth: 0
 
+      - name: Initialize mandatory git config
+        id: step1
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email noreply@github.com
+
       - name: Setup Hugo binaries
         id: step2
         uses: peaceiris/actions-hugo@v2.6.0
         with:
           hugo-version: '0.97.0'
           extended: true
+
+      # - uses: rlespinasse/git-commit-data-action@1.4.0
+      # use MD template - https://github.com/lmservas/hikari-x86_64/blob/afaa6ad0e5814ef46755e83a0c20b07696938c40/.github/workflows/update-readme.yml
 
       - name: Get website info
         id: step3
@@ -200,5 +205,5 @@ jobs:
           # Overwrite existing files
           keep_files: false
           # Set custom Git username and email
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          # user_name: 'github-actions[bot]'
+          # user_email: 'github-actions[bot]@users.noreply.github.com'
