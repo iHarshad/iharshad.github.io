@@ -160,6 +160,7 @@ jobs:
         run: |
           echo "'date_info':'${{ needs.build.outputs.date_info }}'"
           echo -e "# Workflow Summary" >> $GITHUB_STEP_SUMMARY
+          echo -e "|   |   |" >> $GITHUB_STEP_SUMMARY
           echo -e "|---|---|" >> $GITHUB_STEP_SUMMARY
           echo -e "| date_info | ${{ needs.build.outputs.date_info }} |" >> $GITHUB_STEP_SUMMARY
           echo -e "| branch_info | ${{ needs.build.outputs.branch_info }} |" >> $GITHUB_STEP_SUMMARY
