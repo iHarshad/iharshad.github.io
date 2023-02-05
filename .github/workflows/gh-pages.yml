@@ -160,7 +160,7 @@ jobs:
         run: |
           echo -e "# Workflow Summary" >> $GITHUB_STEP_SUMMARY
           echo -e "```" >> $GITHUB_STEP_SUMMARY
-          echo -e "{
+          echo -e "{" >> $GITHUB_STEP_SUMMARY
           echo -e "  \"date_info\":\"${{ needs.build.outputs.date_info }}\"," >> $GITHUB_STEP_SUMMARY
           echo -e "  \"branch_info\":\"${{ needs.build.outputs.branch_info }}\"," >> $GITHUB_STEP_SUMMARY
           echo -e "  \"commit_info\":\"${{ needs.build.outputs.commit_info }}\"," >> $GITHUB_STEP_SUMMARY
@@ -168,10 +168,6 @@ jobs:
           echo -e "  \"message_info\":\"${{ needs.build.outputs.message_info }}\"" >> $GITHUB_STEP_SUMMARY
           echo -e "}" >> $GITHUB_STEP_SUMMARY
           echo -e "```" >> $GITHUB_STEP_SUMMARY
-
-      - name: check json
-        run: |
-          cat ./dist/meta/index.html
 
       - name: Create dist archive
         run: |
