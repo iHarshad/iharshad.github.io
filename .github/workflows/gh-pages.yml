@@ -172,7 +172,7 @@ jobs:
         run: |
           echo "$(cat ./dist/meta/index.html)" >> $GITHUB_STEP_SUMMARY
 
-      - uses: rlespinasse/git-commit-data-action@1.4.0
+      - uses: rlespinasse/git-commit-data-action@v1.4.0
 
       - name: get info
         run: |
