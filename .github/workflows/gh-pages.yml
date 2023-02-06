@@ -107,11 +107,11 @@ jobs:
           set -x
           echo "## Theme info" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "```" >> $GITHUB_STEP_SUMMARY
+          # echo "```" >> $GITHUB_STEP_SUMMARY
           cd themes/maverick
           theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
           echo -e "${theme_info}" >> $GITHUB_STEP_SUMMARY
-          echo "```" >> $GITHUB_STEP_SUMMARY
+          # echo "```" >> $GITHUB_STEP_SUMMARY
           echo "---" >> $GITHUB_STEP_SUMMARY
 
       # - name: Update domain name in config file
