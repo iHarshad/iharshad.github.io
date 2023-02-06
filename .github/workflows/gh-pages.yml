@@ -104,15 +104,15 @@ jobs:
           # theme_info=`git submodule foreach 'git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"'`
           # echo -e "${theme_info}" >> $GITHUB_STEP_SUMMARY
 
+          ls
+          ls -alh themes
+          ls -alh themes/zeno
+
           echo -e "# Theme info" >> $GITHUB_STEP_SUMMARY
           cd themes/maverick
           theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
           echo -e "${theme_info}" >> $GITHUB_STEP_SUMMARY
           echo -e "---" >> $GITHUB_STEP_SUMMARY
-
-          ls
-          ls -alh themes
-          # ls -alh themes/zeno
 
       # - name: Update domain name in config file
       #   uses: jacobtomlinson/gha-find-replace@v2
