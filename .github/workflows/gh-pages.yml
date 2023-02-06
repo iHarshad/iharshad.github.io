@@ -61,8 +61,9 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           repository: iHarshad/zeno
+          ref: master
           fetch-depth: 0
-          # token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_PAT }}
           path: themes/zeno
 
       - name: Setup Hugo binaries
