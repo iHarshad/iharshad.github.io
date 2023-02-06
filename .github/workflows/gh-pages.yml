@@ -110,8 +110,8 @@ jobs:
           echo -e "${theme_info}" >> $GITHUB_STEP_SUMMARY
           echo -e "---" >> $GITHUB_STEP_SUMMARY
 
-          # ls -alh themes
-          ls -alh themes/zeno
+          ls -alh themes
+          # ls -alh themes/zeno
 
       # - name: Update domain name in config file
       #   uses: jacobtomlinson/gha-find-replace@v2
@@ -131,7 +131,8 @@ jobs:
             --templateMetrics \
             --templateMetricsHints \
             --minify \
-            --gc
+            --gc \
+            --theme zeno
 
       - name: Create build archive
         run: |
