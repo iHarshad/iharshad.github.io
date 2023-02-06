@@ -97,6 +97,9 @@ jobs:
           echo -e "message_info=${message_info}" >> $GITHUB_OUTPUT
           echo -e "message_info=${message_info}" >> $GITHUB_STEP_SUMMARY
 
+          theme_info=`git submodule foreach 'git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"'`
+          echo -e "${theme_info}" >> $GITHUB_STEP_SUMMARY
+
       # - name: Update domain name in config file
       #   uses: jacobtomlinson/gha-find-replace@v2
       #   with:
