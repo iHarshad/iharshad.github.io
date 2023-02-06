@@ -47,20 +47,23 @@ jobs:
       message_info: ${{ steps.step3.outputs.message_info }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout website code
         id: step0
         uses: actions/checkout@v3.3.0
         with:
           # Fetch Hugo themes (true OR recursive)
           submodules: true
-          # Fetch all history for .GitInfo and .Lastmod
+          # Fetch full history for .GitInfo and .Lastmod
           fetch-depth: 0
 
-      - name: Initialize mandatory git config
+      - name: Pull latest content
         id: step1
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email noreply@github.com
+        uses: actions/checkout@v3.3.0
+        with:
+          repository: iHarshad/zeno
+          fetch-depth: 0
+          # token: ${{ secrets.GH_PAT }}
+          path: themes/zeno
 
       - name: Setup Hugo binaries
         id: step2
@@ -79,26 +82,28 @@ jobs:
 
           date_info=`git log --max-count=1 --pretty=format:"%ad" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
           echo -e "date_info=${date_info}" >> $GITHUB_OUTPUT
-          echo -e "date_info=${date_info}" >> $GITHUB_STEP_SUMMARY
+          # echo -e "date_info=${date_info}" >> $GITHUB_STEP_SUMMARY
 
           branch_info=`git log --max-count=1 --pretty=format:"%d" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
           echo -e "branch_info=${branch_info}" >> $GITHUB_OUTPUT
-          echo -e "branch_info=${branch_info}" >> $GITHUB_STEP_SUMMARY
+          # echo -e "branch_info=${branch_info}" >> $GITHUB_STEP_SUMMARY
 
           commit_info=`git log --max-count=1 --pretty=format:"%H" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
           echo -e "commit_info=${commit_info}" >> $GITHUB_OUTPUT
-          echo -e "commit_info=${commit_info}" >> $GITHUB_STEP_SUMMARY
+          # echo -e "commit_info=${commit_info}" >> $GITHUB_STEP_SUMMARY
 
           author_info=`git log --max-count=1 --pretty=format:"%an <%ae>" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
           echo -e "author_info=${author_info}" >> $GITHUB_OUTPUT
-          echo -e "author_info=${author_info}" >> $GITHUB_STEP_SUMMARY
+          # echo -e "author_info=${author_info}" >> $GITHUB_STEP_SUMMARY
 
           message_info=`git log --max-count=1 --pretty=format:"%s" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
           echo -e "message_info=${message_info}" >> $GITHUB_OUTPUT
-          echo -e "message_info=${message_info}" >> $GITHUB_STEP_SUMMARY
+          # echo -e "message_info=${message_info}" >> $GITHUB_STEP_SUMMARY
 
           theme_info=`git submodule foreach 'git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"'`
           echo -e "${theme_info}" >> $GITHUB_STEP_SUMMARY
+
+          ls -alh themes/
 
       # - name: Update domain name in config file
       #   uses: jacobtomlinson/gha-find-replace@v2
@@ -200,11 +205,6 @@ jobs:
     runs-on: ubuntu-22.04
     needs: test
     steps:
-      - name: Initialize mandatory git config
-        id: step1
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email noreply@github.com
 
       - name: Download dist.tar.gz artifact from test job
         uses: actions/download-artifact@v3.0.2
@@ -235,5 +235,5 @@ jobs:
           # Overwrite existing files
           keep_files: false
           # Set custom Git username and email
-          # user_name: 'github-actions[bot]'
-          # user_email: 'github-actions[bot]@users.noreply.github.com'
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
