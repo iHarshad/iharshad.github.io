@@ -11,15 +11,10 @@ on:
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
-  # Allows you to curl API to trigger workflow on non-default branch
+  # Allows you to hit the API from anywhere to trigger workflow on all branchs
   # /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
   # https://stackoverflow.com/a/68148239
   workflow_dispatch:
-
-  # Allows external webhook trigger
-  # repository_dispatch:
-  #   types:
-  #     - webhook
 
 # Default to bash
 defaults:
@@ -94,7 +89,7 @@ jobs:
           echo -e "commit_info=${commit_info}" >> $GITHUB_OUTPUT
           echo -e "commit_info=${commit_info}" >> $GITHUB_STEP_SUMMARY
 
-          author_info=`git log --max-count=1 --pretty=format:"%an < %ae >" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
+          author_info=`git log --max-count=1 --pretty=format:"%an <%ae>" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
           echo -e "author_info=${author_info}" >> $GITHUB_OUTPUT
           echo -e "author_info=${author_info}" >> $GITHUB_STEP_SUMMARY
 
@@ -166,11 +161,11 @@ jobs:
           echo -e "## Website Version Information" >> $GITHUB_STEP_SUMMARY
           echo -e "|   |   |" >> $GITHUB_STEP_SUMMARY
           echo -e "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo -e "| date_info | ${{ needs.build.outputs.date_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "| branch_info | ${{ needs.build.outputs.branch_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "| commit_info | ${{ needs.build.outputs.commit_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "| author_info | ${{ needs.build.outputs.author_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "| message_info | ${{ needs.build.outputs.message_info }} |" >> $GITHUB_STEP_SUMMARY
+          echo -e "| Commit Date | ${{ needs.build.outputs.date_info }} |" >> $GITHUB_STEP_SUMMARY
+          echo -e "| Branch Name | ${{ needs.build.outputs.branch_info }} |" >> $GITHUB_STEP_SUMMARY
+          echo -e "| Commit Hash | ${{ needs.build.outputs.commit_info }} |" >> $GITHUB_STEP_SUMMARY
+          echo -e "| Author Name | ${{ needs.build.outputs.author_info }} |" >> $GITHUB_STEP_SUMMARY
+          echo -e "| Message | ${{ needs.build.outputs.message_info }} |" >> $GITHUB_STEP_SUMMARY
           echo -e "---" >> $GITHUB_STEP_SUMMARY
 
       - name: summary
@@ -202,6 +197,12 @@ jobs:
     runs-on: ubuntu-22.04
     needs: test
     steps:
+      - name: Initialize mandatory git config
+        id: step1
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email noreply@github.com
+
       - name: Download dist.tar.gz artifact from test job
         uses: actions/download-artifact@v3.0.2
         with:
