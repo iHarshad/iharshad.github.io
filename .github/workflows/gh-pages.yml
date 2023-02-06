@@ -110,6 +110,7 @@ jobs:
           echo -e "${theme_info}" >> $GITHUB_STEP_SUMMARY
           echo -e "---" >> $GITHUB_STEP_SUMMARY
 
+          ls
           ls -alh themes
           # ls -alh themes/zeno
 
