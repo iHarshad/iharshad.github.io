@@ -103,16 +103,17 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
 
-          echo "## Content Information" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          theme_info=`git log --max-count=1 --pretty=format:${commit_format} themes/maverick`
-          echo "<details>" >> $GITHUB_STEP_SUMMARY
-          echo "<summary>Commit Details</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "<pre>" >> $GITHUB_STEP_SUMMARY
-          echo "${theme_info}" >> $GITHUB_STEP_SUMMARY
-          echo "</pre>" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+          # echo "## Content Information" >> $GITHUB_STEP_SUMMARY
+          # echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+          # content_info=`git log --max-count=1 --pretty=format:$commit_format themes/maverick`
+          # echo "<details>" >> $GITHUB_STEP_SUMMARY
+          # echo "<summary>Commit Details</summary>" >> $GITHUB_STEP_SUMMARY
+          # echo "<pre>" >> $GITHUB_STEP_SUMMARY
+          # echo "${content_info}" >> $GITHUB_STEP_SUMMARY
+          # echo "</pre>" >> $GITHUB_STEP_SUMMARY
+          # echo "</details>" >> $GITHUB_STEP_SUMMARY
+          # echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+
       # - name: Update domain name in config file
       #   uses: jacobtomlinson/gha-find-replace@v2
       #   with:
