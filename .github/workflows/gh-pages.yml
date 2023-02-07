@@ -86,7 +86,7 @@ jobs:
           echo "<details>" >> $GITHUB_STEP_SUMMARY
           echo "<summary>Commit Details</summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
-          website_info="$(git log --max-count=1 --format=${commit_format})"
+          website_info=$(git log --max-count=1 --format=${commit_format})
           echo "${website_info}" >> $GITHUB_STEP_SUMMARY
           echo "</pre>" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
