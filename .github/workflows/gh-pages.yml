@@ -78,18 +78,26 @@ jobs:
       - name: Get website info
         id: step3
         run: |
-          echo "## Website info" >> $GITHUB_STEP_SUMMARY
+          echo "## Website Information" >> $GITHUB_STEP_SUMMARY
+          echo "<details>" >> $GITHUB_STEP_SUMMARY
+          echo "<summary>Commit Details </summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
           website_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
           echo "${website_info}" >> $GITHUB_STEP_SUMMARY
           echo "</pre>" >> $GITHUB_STEP_SUMMARY
-          echo "## Theme info" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+          echo "## Theme Information" >> $GITHUB_STEP_SUMMARY
           cd themes/maverick
-          theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" | sed -i 's/$/<br>/'`
+          theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          echo "<details>" >> $GITHUB_STEP_SUMMARY
+          echo "<summary>Commit Details </summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
-          # echo "<summary>Theme info </summary>" >> $GITHUB_STEP_SUMMARY
+          # echo "<summary>Theme Information </summary>" >> $GITHUB_STEP_SUMMARY
           echo "${theme_info}" >> $GITHUB_STEP_SUMMARY
           echo "</pre>" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
           # echo "```" >> $GITHUB_STEP_SUMMARY
           # echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           # echo "---" >> $GITHUB_STEP_SUMMARY
