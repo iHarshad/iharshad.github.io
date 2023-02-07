@@ -84,9 +84,9 @@ jobs:
           echo "## Website Information" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "<details>" >> $GITHUB_STEP_SUMMARY
-          echo "<summary>Commit Details </summary>" >> $GITHUB_STEP_SUMMARY
+          echo "<summary>Commit Details</summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
-          website_info=`git log --max-count=1 --pretty=format:${commit_format}`
+          website_info=`git log --max-count=1 --pretty=format:$commit_format`
           echo "${website_info}" >> $GITHUB_STEP_SUMMARY
           echo "</pre>" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -94,16 +94,25 @@ jobs:
 
           echo "## Theme Information" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          theme_info=`git log --max-count=1 --pretty=format:${commit_format} themes/maverick`
+          theme_info=`git log --max-count=1 --pretty=format:$commit_format themes/maverick`
           echo "<details>" >> $GITHUB_STEP_SUMMARY
           echo "<summary>Commit Details </summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
-          # echo "<summary>Theme Information </summary>" >> $GITHUB_STEP_SUMMARY
           echo "${theme_info}" >> $GITHUB_STEP_SUMMARY
           echo "</pre>" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
 
+          echo "## Content Information" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+          theme_info=`git log --max-count=1 --pretty=format:${commit_format} themes/maverick`
+          echo "<details>" >> $GITHUB_STEP_SUMMARY
+          echo "<summary>Commit Details</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "<pre>" >> $GITHUB_STEP_SUMMARY
+          echo "${theme_info}" >> $GITHUB_STEP_SUMMARY
+          echo "</pre>" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
       # - name: Update domain name in config file
       #   uses: jacobtomlinson/gha-find-replace@v2
       #   with:
