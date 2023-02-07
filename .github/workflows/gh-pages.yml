@@ -85,7 +85,7 @@ jobs:
           # echo "```" >> $GITHUB_STEP_SUMMARY
           echo "## Theme info" >> $GITHUB_STEP_SUMMARY
           cd themes/maverick
-          theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" | sed -i 's/$/<br>/'`
           echo "<details>" >> $GITHUB_STEP_SUMMARY
           echo "<summary>Theme info </summary>" >> $GITHUB_STEP_SUMMARY
           echo "${theme_info}" >> $GITHUB_STEP_SUMMARY
