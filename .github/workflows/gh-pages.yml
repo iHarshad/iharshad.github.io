@@ -78,18 +78,22 @@ jobs:
       - name: Get website info
         id: step3
         run: |
+          commit_format=" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"
+
           echo "## Website Information" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "<details>" >> $GITHUB_STEP_SUMMARY
           echo "<summary>Commit Details </summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
-          website_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          website_info=`git log --max-count=1 --pretty=format:${commit_format}`
           echo "${website_info}" >> $GITHUB_STEP_SUMMARY
           echo "</pre>" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
 
           echo "## Theme Information" >> $GITHUB_STEP_SUMMARY
-          cd themes/maverick
-          theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+          theme_info=`git log --max-count=1 --pretty=format:${commit_format} themes/maverick`
           echo "<details>" >> $GITHUB_STEP_SUMMARY
           echo "<summary>Commit Details </summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
@@ -97,10 +101,7 @@ jobs:
           echo "${theme_info}" >> $GITHUB_STEP_SUMMARY
           echo "</pre>" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
-
-          # echo "```" >> $GITHUB_STEP_SUMMARY
-          # echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          # echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
 
       # - name: Update domain name in config file
       #   uses: jacobtomlinson/gha-find-replace@v2
