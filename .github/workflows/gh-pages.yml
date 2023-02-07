@@ -73,48 +73,25 @@ jobs:
           hugo-version: '0.97.0'
           extended: true
 
-      # use MD template - https://github.com/lmservas/hikari-x86_64/blob/afaa6ad0e5814ef46755e83a0c20b07696938c40/.github/workflows/update-readme.yml
+      # Use MD template - https://github.com/lmservas/hikari-x86_64/blob/afaa6ad0e5814ef46755e83a0c20b07696938c40/.github/workflows/update-readme.yml
 
       - name: Get website info
         id: step3
         run: |
-          # Remove trailing whitespace - https://unix.stackexchange.com/a/102021
-          # Multiline output - https://stackoverflow.com/a/74232400
-
-          date_info=`git log --max-count=1 --pretty=format:"%ad" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo -e "date_info=${date_info}" >> $GITHUB_OUTPUT
-          # echo -e "date_info=${date_info}" >> $GITHUB_STEP_SUMMARY
-
-          branch_info=`git log --max-count=1 --pretty=format:"%d" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo -e "branch_info=${branch_info}" >> $GITHUB_OUTPUT
-          # echo -e "branch_info=${branch_info}" >> $GITHUB_STEP_SUMMARY
-
-          commit_info=`git log --max-count=1 --pretty=format:"%H" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo -e "commit_info=${commit_info}" >> $GITHUB_OUTPUT
-          # echo -e "commit_info=${commit_info}" >> $GITHUB_STEP_SUMMARY
-
-          author_info=`git log --max-count=1 --pretty=format:"%an <%ae>" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo -e "author_info=${author_info}" >> $GITHUB_OUTPUT
-          # echo -e "author_info=${author_info}" >> $GITHUB_STEP_SUMMARY
-
-          message_info=`git log --max-count=1 --pretty=format:"%s" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'`
-          echo -e "message_info=${message_info}" >> $GITHUB_OUTPUT
-          # echo -e "message_info=${message_info}" >> $GITHUB_STEP_SUMMARY
-
-          # theme_info=`git submodule foreach 'git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"'`
-          # echo -e "${theme_info}" >> $GITHUB_STEP_SUMMARY
-
-          set -x
-          echo "## Theme info" >> $GITHUB_STEP_SUMMARY
+          echo "## Website info" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          website_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          echo "${website_info}" >> $GITHUB_STEP_SUMMARY
           # echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "## Theme info" >> $GITHUB_STEP_SUMMARY
           cd themes/maverick
           theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          echo "<details>" >> $GITHUB_STEP_SUMMARY
+          echo "<summary>Theme info </summary>" >> $GITHUB_STEP_SUMMARY
           echo "${theme_info}" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
           # echo "```" >> $GITHUB_STEP_SUMMARY
-          echo "This is the lead in sentence for the list" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          echo "- Lets add a bullet point" >> $GITHUB_STEP_SUMMARY
           echo "---" >> $GITHUB_STEP_SUMMARY
 
       # - name: Update domain name in config file
@@ -174,19 +151,6 @@ jobs:
             "message_info":"${{ needs.build.outputs.message_info }}"
           }
           EOF
-
-      - name: Create workflow summary
-        run: |
-          echo -e "# Workflow Summary" >> $GITHUB_STEP_SUMMARY
-          echo -e "## Website Version Information" >> $GITHUB_STEP_SUMMARY
-          echo -e "|   |   |" >> $GITHUB_STEP_SUMMARY
-          echo -e "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo -e "| Commit Date | ${{ needs.build.outputs.date_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "| Branch Name | ${{ needs.build.outputs.branch_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "| Commit Hash | ${{ needs.build.outputs.commit_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "| Author Name | ${{ needs.build.outputs.author_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "| Message | ${{ needs.build.outputs.message_info }} |" >> $GITHUB_STEP_SUMMARY
-          echo -e "---" >> $GITHUB_STEP_SUMMARY
 
       - name: summary
         run: |
