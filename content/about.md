@@ -21,3 +21,5 @@ Lines is a minimalistic Hugo blogging theme.
 - Sass
 - Seo optimized (Twitter cards, Facebook Open Graph, Schema.org)
 - Ultra fast (Only ~2kb of CSS)
+
+I'm a wanderer with an interest in programming, hardware, hacking, languages, food, coffee, science. This blog mostly serves as my private knowledgebase, but I figured it might be useful to others.

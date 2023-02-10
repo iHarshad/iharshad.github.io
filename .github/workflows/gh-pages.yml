@@ -79,6 +79,7 @@ jobs:
         id: step3
         run: |
           set -x
+          bash --version
           commit_format=" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"
 
           echo "## Website Information" >> $GITHUB_STEP_SUMMARY
@@ -86,7 +87,9 @@ jobs:
           echo "<details>" >> $GITHUB_STEP_SUMMARY
           echo "<summary>Commit Details</summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
+          # Working
           website_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          # Not Working
           # website_info=$(git log --max-count=1 --pretty=format:${commit_format})
           echo "${website_info}" >> $GITHUB_STEP_SUMMARY
           echo "</pre>" >> $GITHUB_STEP_SUMMARY
@@ -95,8 +98,12 @@ jobs:
 
           echo "## Theme Information" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A" themes/maverick`
-          # theme_info=`git log --max-count=1 --pretty=format:$commit_format themes/maverick`
+          # Working
+          cd themes/maverick
+          theme_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          # Not Working
+          # theme_info=`git log --max-count=1 --pretty=format:$commit_format`
+          cd ../..
           echo "<details>" >> $GITHUB_STEP_SUMMARY
           echo "<summary>Commit Details </summary>" >> $GITHUB_STEP_SUMMARY
           echo "<pre>" >> $GITHUB_STEP_SUMMARY
@@ -107,8 +114,12 @@ jobs:
 
           # echo "## Content Information" >> $GITHUB_STEP_SUMMARY
           # echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          # content_info=`git log --max-count=1 --pretty=format:$commit_format themes/maverick`
-          # content_info=`git log --max-count=1 --pretty=format:$commit_format themes/maverick`
+          # Working
+          # cd content
+          # content_info=`git log --max-count=1 --pretty=format:" Branch: %d%x0A Commit: %H%x0A Author: %an <%ae>%x0A Date: %ad%x0A Message: %s%x0A"`
+          # Not Working
+          # content_info=`git log --max-count=1 --pretty=format:$commit_format`
+          # cd ..
           # echo "<details>" >> $GITHUB_STEP_SUMMARY
           # echo "<summary>Commit Details</summary>" >> $GITHUB_STEP_SUMMARY
           # echo "<pre>" >> $GITHUB_STEP_SUMMARY
@@ -162,31 +173,10 @@ jobs:
         run: |
           tar -xzvf build.tar.gz
 
-      - name: build json
-        run: |
-          mkdir -p ./dist/meta
-          cat <<EOF > ./dist/meta/index.html
-          {
-            "date_info":"${{ needs.build.outputs.date_info }}",
-            "branch_info":"${{ needs.build.outputs.branch_info }}",
-            "commit_info":"${{ needs.build.outputs.commit_info }}",
-            "author_info":"${{ needs.build.outputs.author_info }}",
-            "message_info":"${{ needs.build.outputs.message_info }}"
-          }
-          EOF
 
-      - name: summary
+      - name: Test build files
         run: |
-          echo "$(cat ./dist/meta/index.html)" >> $GITHUB_STEP_SUMMARY
-
-      - name: get info
-        run: |
-          echo -e "## Theme Version Information" >> $GITHUB_STEP_SUMMARY
-          echo -e "---" >> $GITHUB_STEP_SUMMARY
-
-      - name: get info
-        run: |
-          echo -e "## Content Version Information" >> $GITHUB_STEP_SUMMARY
+          echo -e "Testing"
 
       - name: Create dist archive
         run: |
