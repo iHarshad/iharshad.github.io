@@ -47,7 +47,7 @@ jobs:
       message_info: ${{ steps.step3.outputs.message_info }}
 
     steps:
-      - name: Checkout website code
+      - name: Checkout website code and theme
         id: step0
         uses: actions/checkout@v3.3.0
         with:
@@ -60,11 +60,11 @@ jobs:
         id: step1
         uses: actions/checkout@v3.3.0
         with:
-          repository: iHarshad/zeno
+          repository: iHarshad/hugo-example-content
           ref: master
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
-          path: themes/zeno
+          path: content
 
       - name: Setup Hugo binaries
         id: step2
