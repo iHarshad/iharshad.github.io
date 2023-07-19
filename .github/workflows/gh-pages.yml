@@ -47,6 +47,12 @@ jobs:
       message_info: ${{ steps.step3.outputs.message_info }}
 
     steps:
+      - name: Set GHA runner TZ to IST
+        id: step00
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Asia/Kolkata" # default = "UTC"
+
       - name: Checkout website code and theme
         id: step0
         uses: actions/checkout@v3.3.0
@@ -152,7 +158,7 @@ jobs:
         run: |
           tar -czvf build.tar.gz dist
 
-      - name: Upload build rtifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v3.1.2
         with:
           name: build.tar.gz
@@ -164,6 +170,12 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build
     steps:
+      - name: Set GHA runner TZ to IST
+        id: step00
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Asia/Kolkata" # default = "UTC"
+
       - name: Download build.tar.gz artifact from build job
         uses: actions/download-artifact@v3.0.2
         with:
@@ -172,7 +184,6 @@ jobs:
       - name: Extract artifact
         run: |
           tar -xzvf build.tar.gz
-
 
       - name: Test build files
         run: |
@@ -194,6 +205,11 @@ jobs:
     runs-on: ubuntu-22.04
     needs: test
     steps:
+      - name: Set GHA runner TZ to IST
+        id: step00
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Asia/Kolkata" # default = "UTC"
 
       - name: Download dist.tar.gz artifact from test job
         uses: actions/download-artifact@v3.0.2
