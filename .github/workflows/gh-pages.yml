@@ -16,6 +16,10 @@ on:
   # https://stackoverflow.com/a/68148239
   workflow_dispatch:
 
+  # For testing only
+  repository_dispatch:
+
+  
 # Default to bash
 defaults:
   run:
