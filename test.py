@@ -7,4 +7,4 @@ import os
 print(f"GITHUB_RUN_ID = {os.environ.get('GITHUB_RUN_ID')}")
 
 print(f"Message: { os.environ.get('GITHUB_EVENT_INPUTS_MESSAGE1') }")
-print(f"Tags: {os.environ.get(github.event.inputs.tag1)}")
+print(f"Tags: {os.environ.get('INPUT_MESSAGE')}")
