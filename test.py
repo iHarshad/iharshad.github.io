@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+print(os.environ)
 
 # Get the value of the GITHUB_RUN_ID environment variable
 print(f"GITHUB_RUN_ID = {os.environ.get('GITHUB_RUN_ID')}")
