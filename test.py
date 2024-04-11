@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # Get the value of the GITHUB_RUN_ID environment variable
