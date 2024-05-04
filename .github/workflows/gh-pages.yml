@@ -53,13 +53,13 @@ jobs:
     steps:
       - name: Set GHA runner TZ to IST
         id: step00
-        uses: szenius/set-timezone@v1.2
+        uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: "Asia/Kolkata" # default = "UTC"
 
       - name: Checkout website code and theme
         id: step0
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4.1.4
         with:
           # Fetch Hugo themes (true OR recursive)
           submodules: true
@@ -68,7 +68,7 @@ jobs:
 
       - name: Pull latest content
         id: step1
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4.1.4
         with:
           repository: iHarshad/hugo-example-content
           ref: master
@@ -78,7 +78,7 @@ jobs:
 
       - name: Setup Hugo binaries
         id: step2
-        uses: peaceiris/actions-hugo@v2.6.0
+        uses: peaceiris/actions-hugo@v3.0.0
         with:
           hugo-version: '0.97.0'
           extended: true
@@ -163,7 +163,7 @@ jobs:
           tar -czvf build.tar.gz dist
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: build.tar.gz
           path: build.tar.gz
