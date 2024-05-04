@@ -173,7 +173,7 @@ jobs:
   test:
     permissions:
       contents: read
-      pages: write
+      # pages: write
       id-token: write
     runs-on: ubuntu-22.04
     needs: build
@@ -210,17 +210,21 @@ jobs:
           retention-days: 5 # default 90 days
 
   deploy:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     runs-on: ubuntu-22.04
     needs: test
     steps:
       - name: Set GHA runner TZ to IST
         id: step00
-        uses: szenius/set-timezone@v1.2
+        uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: "Asia/Kolkata" # default = "UTC"
 
       - name: Download dist.tar.gz artifact from test job
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: dist.tar.gz
 
@@ -230,7 +234,7 @@ jobs:
 
       - name: Deploy static site
         id: step5
-        uses: peaceiris/actions-gh-pages@v3.9.2
+        uses: peaceiris/actions-gh-pages@v4.0.0
         # If you're changing the branch from main,
         # also change the `main` in `refs/heads/main`
         # below accordingly.
