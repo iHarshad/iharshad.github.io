@@ -185,7 +185,7 @@ jobs:
           timezoneLinux: "Asia/Kolkata" # default = "UTC"
 
       - name: Download build.tar.gz artifact from build job
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: build.tar.gz
 
