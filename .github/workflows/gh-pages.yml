@@ -26,10 +26,10 @@ defaults:
     shell: bash
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+# permissions:
+#   contents: write
+#   pages: write
+#   id-token: write
 
 # Ensure that only a single job or workflow using the same concurrency group will run at a time
 concurrency:
@@ -171,6 +171,10 @@ jobs:
           retention-days: 5 # default 90 days
 
   test:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     runs-on: ubuntu-22.04
     needs: build
     steps:
