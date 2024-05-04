@@ -180,7 +180,7 @@ jobs:
     steps:
       - name: Set GHA runner TZ to IST
         id: step00
-        uses: szenius/set-timezone@v1.2
+        uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: "Asia/Kolkata" # default = "UTC"
 
@@ -202,7 +202,7 @@ jobs:
           tar -czvf dist.tar.gz dist
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: dist.tar.gz
           path: dist.tar.gz
