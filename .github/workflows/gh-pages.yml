@@ -173,7 +173,7 @@ jobs:
   test:
     permissions:
       contents: read
-      # pages: write
+      pages: write
       id-token: write
     runs-on: ubuntu-22.04
     needs: build
