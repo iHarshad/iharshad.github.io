@@ -180,7 +180,11 @@ $$
 $$&lt;/p></description><author/><guid>https://iharshad.github.io/posts/math-typesetting/</guid><pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate></item><item><title>Emoji Support</title><link>https://iharshad.github.io/posts/emoji-support/</link><description>&lt;p>Emoji can be enabled in a Hugo project in a number of ways.&lt;/p>
 &lt;p>The &lt;a href="https://gohugo.io/functions/emojify/">&lt;code>emojify&lt;/code>&lt;/a> function can be called directly in templates or &lt;a href="https://gohugo.io/templates/shortcode-templates/#inline-shortcodes">Inline Shortcodes&lt;/a>.&lt;/p>
 &lt;p>To enable emoji globally, set &lt;code>enableEmoji&lt;/code> to &lt;code>true&lt;/code> in your site&amp;rsquo;s &lt;a href="https://gohugo.io/getting-started/configuration/">configuration&lt;/a> and then you can type emoji shorthand codes directly in content files; e.g.&lt;/p>
-&lt;p>&lt;span class="nowrap">&lt;span class="emojify">🙈&lt;/span> &lt;code>:see_no_evil:&lt;/code>&lt;/span> &lt;span class="nowrap">&lt;span class="emojify">🙉&lt;/span> &lt;code>:hear_no_evil:&lt;/code>&lt;/span> &lt;span class="nowrap">&lt;span class="emojify">🙊&lt;/span> &lt;code>:speak_no_evil:&lt;/code>&lt;/span>&lt;/p>
+&lt;p>
+&lt;span class="nowrap">&lt;span class="emojify">🙈&lt;/span> &lt;code>:see_no_evil:&lt;/code>&lt;/span>
+&lt;span class="nowrap">&lt;span class="emojify">🙉&lt;/span> &lt;code>:hear_no_evil:&lt;/code>&lt;/span>
+&lt;span class="nowrap">&lt;span class="emojify">🙊&lt;/span> &lt;code>:speak_no_evil:&lt;/code>&lt;/span>
+&lt;/p>
 &lt;br>
 &lt;p>The &lt;a href="http://www.emoji-cheat-sheet.com/">Emoji cheat sheet&lt;/a> is a useful reference for emoji shorthand codes.&lt;/p>
 &lt;hr>
