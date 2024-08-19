@@ -77,7 +77,7 @@ if __name__ == "__main__":
     files = get_committed_files(args.project_path, commit_count=args.commits)
     if files:
         print(
-            f"Committed files in the last {args.commits} commit(s) for project '{args.project_path}':"
+            f"Committed files in the last {args.commits} commit(s) for project '{args.project_path}' [{len(files)}]:"
         )
         for file in files:
             print(file)
