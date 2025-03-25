@@ -141,15 +141,18 @@
 &lt;p>The above quote is excerpted from Rob Pike&amp;rsquo;s &lt;a href="https://www.youtube.com/watch?v=PAAkCSZUG1c">talk&lt;/a> during Gopherfest, November 18, 2015.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/section></description><author/><guid>https://iharshad.github.io/posts/markdown-syntax/</guid><pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate></item><item><title>Placeholder Text</title><link>https://iharshad.github.io/posts/placeholder-text/</link><description>&lt;p>Lorem est tota propiore conpellat pectoribus de pectora summo.&lt;/p>
-&lt;p>Redit teque digerit hominumque toris verebor lumina non cervice subde tollit usus habet Arctonque, furores quas nec ferunt. Quoque montibus nunc caluere tempus inhospita parcite confusaque translucet patri vestro qui optatis lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.&lt;/p>
+&lt;/section></description><author/><guid>https://iharshad.github.io/posts/markdown-syntax/</guid><pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate></item><item><title>Placeholder Text</title><link>https://iharshad.github.io/posts/placeholder-text/</link><description>&lt;p>Redit teque digerit
+hominumque toris verebor lumina non cervice subde tollit usus habet Arctonque, furores quas nec
+ferunt. Quoque montibus nunc caluere tempus inhospita parcite confusaque translucet patri vestro qui
+optatis lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.&lt;/p>
 &lt;ol>
 &lt;li>Exierant elisi ambit vivere dedere&lt;/li>
 &lt;li>Duce pollice&lt;/li>
 &lt;li>Eris modo&lt;/li>
 &lt;li>Spargitque ferrea quos palude&lt;/li>
 &lt;/ol>
-&lt;p>Rursus nulli murmur; hastile inridet ut ab gravi sententia! Nomine potitus silentia flumen, sustinet placuit petis in dilapsa erat sunt. Atria tractus malis.&lt;/p>
+&lt;p>Rursus nulli murmur; hastile inridet ut ab gravi sententia! Nomine potitus silentia flumen, sustinet
+placuit petis in dilapsa erat sunt. Atria tractus malis.&lt;/p>
 &lt;ol>
 &lt;li>Comas hunc haec pietate fetum procerum dixit&lt;/li>
 &lt;li>Post torum vates letum Tiresia&lt;/li>
@@ -161,9 +164,18 @@
 &lt;p>&lt;svg class="canon" xmlns="http://www.w3.org/2000/svg" overflow="visible" viewBox="0 0 496 373" height="373" width="496">&lt;g fill="none">&lt;path stroke="#000" stroke-width=".75" d="M.599 372.348L495.263 1.206M.312.633l494.95 370.853M.312 372.633L247.643.92M248.502.92l246.76 370.566M330.828 123.869V1.134M330.396 1.134L165.104 124.515">&lt;/path>&lt;path stroke="#ED1C24" stroke-width=".75" d="M275.73 41.616h166.224v249.05H275.73zM54.478 41.616h166.225v249.052H54.478z">&lt;/path>&lt;path stroke="#000" stroke-width=".75" d="M.479.375h495v372h-495zM247.979.875v372">&lt;/path>&lt;ellipse cx="498.729" cy="177.625" rx=".75" ry="1.25">&lt;/ellipse>&lt;ellipse cx="247.229" cy="377.375" rx=".75" ry="1.25">&lt;/ellipse>&lt;/g>&lt;/svg>&lt;/p>
 &lt;p>&lt;a href="https://en.wikipedia.org/wiki/Canons_of_page_construction#Van_de_Graaf_canon">The Van de Graaf Canon&lt;/a>&lt;/p>
 &lt;h2 id="mane-refeci-capiebant-unda-mulcebat">Mane refeci capiebant unda mulcebat&lt;/h2>
-&lt;p>Victa caducifer, malo vulnere contra dicere aurato, ludit regale, voca! Retorsit colit est profanae esse virescere furit nec; iaculi matertera et visa est, viribus. Divesque creatis, tecta novat collumque vulnus est, parvas. &lt;strong>Faces illo pepulere&lt;/strong> tempus adest. Tendit flamma, ab opes virum sustinet, sidus sequendo urbis.&lt;/p>
-&lt;p>Iubar proles corpore raptos vero auctor imperium; sed et huic: manus caeli Lelegas tu lux. Verbis obstitit intus oblectamina fixis linguisque ausus sperare Echionides cornuaque tenent clausit possit. Omnia putatur. Praeteritae refert ausus; ferebant e primus lora nutat, vici quae mea ipse. Et iter nil spectatae vulnus haerentia iuste et exercebat, sui et.&lt;/p>
-&lt;p>Eurytus Hector, materna ipsumque ut Politen, nec, nate, ignari, vernum cohaesit sequitur. Vel &lt;strong>mitis temploque&lt;/strong> vocatus, inque alis, &lt;em>oculos nomen&lt;/em> non silvis corpore coniunx ne displicet illa. Crescunt non unus, vidit visa quantum inmiti flumina mortis facto sic: undique a alios vincula sunt iactata abdita! Suspenderat ego fuit tendit: luna, ante urbem Propoetides &lt;strong>parte&lt;/strong>.&lt;/p></description><author/><guid>https://iharshad.github.io/posts/placeholder-text/</guid><pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate></item><item><title>Math Typesetting</title><link>https://iharshad.github.io/posts/math-typesetting/</link><description>&lt;p>Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.&lt;/p>
+&lt;p>Victa caducifer, malo vulnere contra dicere aurato, ludit regale, voca! Retorsit colit est profanae
+esse virescere furit nec; iaculi matertera et visa est, viribus. Divesque creatis, tecta novat
+collumque vulnus est, parvas. &lt;strong>Faces illo pepulere&lt;/strong> tempus adest. Tendit flamma, ab opes virum
+sustinet, sidus sequendo urbis.&lt;/p>
+&lt;p>Iubar proles corpore raptos vero auctor imperium; sed et huic: manus caeli Lelegas tu lux. Verbis
+obstitit intus oblectamina fixis linguisque ausus sperare Echionides cornuaque tenent clausit
+possit. Omnia putatur. Praeteritae refert ausus; ferebant e primus lora nutat, vici quae mea ipse.
+Et iter nil spectatae vulnus haerentia iuste et exercebat, sui et.&lt;/p>
+&lt;p>Eurytus Hector, materna ipsumque ut Politen, nec, nate, ignari, vernum cohaesit sequitur. Vel
+&lt;strong>mitis temploque&lt;/strong> vocatus, inque alis, &lt;em>oculos nomen&lt;/em> non silvis corpore coniunx ne displicet
+illa. Crescunt non unus, vidit visa quantum inmiti flumina mortis facto sic: undique a alios vincula
+sunt iactata abdita! Suspenderat ego fuit tendit: luna, ante urbem Propoetides &lt;strong>parte&lt;/strong>.&lt;/p></description><author/><guid>https://iharshad.github.io/posts/placeholder-text/</guid><pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate></item><item><title>Math Typesetting</title><link>https://iharshad.github.io/posts/math-typesetting/</link><description>&lt;p>Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.&lt;/p>
 &lt;p>In this example we will be using &lt;a href="https://katex.org/">KaTeX&lt;/a>&lt;/p>
 &lt;ul>
 &lt;li>Create a partial under &lt;code>/layouts/partials/math.html&lt;/code>&lt;/li>
@@ -182,8 +194,7 @@
 &lt;p>Block math:
 $$
 \varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } }
-$$&lt;/p></description><author/><guid>https://iharshad.github.io/posts/math-typesetting/</guid><pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate></item><item><title>Emoji Support</title><link>https://iharshad.github.io/posts/emoji-support/</link><description>&lt;p>Emoji can be enabled in a Hugo project in a number of ways.&lt;/p>
-&lt;p>The &lt;a href="https://gohugo.io/functions/emojify/">&lt;code>emojify&lt;/code>&lt;/a> function can be called directly in templates or &lt;a href="https://gohugo.io/templates/shortcode-templates/#inline-shortcodes">Inline Shortcodes&lt;/a>.&lt;/p>
+$$&lt;/p></description><author/><guid>https://iharshad.github.io/posts/math-typesetting/</guid><pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate></item><item><title>Emoji Support</title><link>https://iharshad.github.io/posts/emoji-support/</link><description>&lt;p>The &lt;a href="https://gohugo.io/functions/emojify/">&lt;code>emojify&lt;/code>&lt;/a> function can be called directly in templates or &lt;a href="https://gohugo.io/templates/shortcode-templates/#inline-shortcodes">Inline Shortcodes&lt;/a>.&lt;/p>
 &lt;p>To enable emoji globally, set &lt;code>enableEmoji&lt;/code> to &lt;code>true&lt;/code> in your site&amp;rsquo;s &lt;a href="https://gohugo.io/getting-started/configuration/">configuration&lt;/a> and then you can type emoji shorthand codes directly in content files; e.g.&lt;/p>
 &lt;p>
 &lt;span class="nowrap">&lt;span class="emojify">🙈&lt;/span> &lt;code>:see_no_evil:&lt;/code>&lt;/span>
