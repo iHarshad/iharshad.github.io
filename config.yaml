@@ -3,19 +3,23 @@ languageCode: "en-us"
 title: "Harshad Parulekar"
 
 theme: "maverick"
-paginate: 3
+paginate: 5
 canonifyurls: true
 
 menu:
   main:
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: '-200'
+    - identifier: notes
+      name: Notes
+      url: /notes/
+      weight: '-200'
     - identifier: about
       name: About
       url: /about/
       weight: '-110'
-    - identifier: posts
-      name: Posts
-      url: /posts/
-      weight: -200
 
 markup:
   goldmark:
