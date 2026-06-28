@@ -1,1 +1,108 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Harshad Parulekar</title><description/><link>https://iharshad.github.io</link><language>en</language><copyright>Copyright 2026, Calvin Tran</copyright><lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://iharshad.github.io/atom.xml" rel="self" type="application/atom+xml"/></channel></rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Harshad Parulekar</title><description/><link>https://iharshad.github.io</link><language>en</language><copyright>Copyright 2026, Calvin Tran</copyright><lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://iharshad.github.io/atom.xml" rel="self" type="application/atom+xml"/><item><title>Supercharged ⚡️ SSH</title><link>https://iharshad.github.io/posts/supercharge-your-ssh/</link><description>&lt;p>I have been working with servers for quite a few years now and SSH has become a swiss army knife of functionality for far more than just remote logins.&lt;/p>
+&lt;p>It all started out with storing the credentials in a simple spreadsheet/CSV file and copy-pasting the details in the terminal. Over the years, the servers have grown from a handful to ~50 plus and counting. And this has made the spreadsheet/CSV archaic to work with.&lt;/p>
+&lt;p>What follows is a list for some of my use cases that leverage the power of ssh. These usecases might be simplified or be baked-in in certain ssh/linux flavours. However, I had to hit the internet and script them for my work and personal laptops.&lt;/p>
+&lt;h2 id="ssh-config-and-aliases">SSH Config and Aliases&lt;/h2>
+&lt;p>This was my initial approach at sharpening my axe. Put all the details in a config file and use friendly aliases to use those details and connect to the server. A few quick searches on the internet led me to &lt;code>~/.ssh/config&lt;/code> file where I could store my SSH configuration and custom aliases.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-ssh-config" data-lang="ssh-config"># ~/.ssh/config
+### default for all ##
+Host *
+ForwardAgent no
+ForwardX11 no
+ForwardX11Trusted yes
+IdentitiesOnly yes
+Protocol 2
+ServerAliveInterval 60
+ServerAliveCountMax 30
+StrictHostKeyChecking no
+IdentityFile &amp;#34;~/.ssh/id_rsa.pem&amp;#34;
+IdentitiesOnly yes
+## override as per host ##
+Host myproject
+HostName 1.2.3.4
+User appuser
+Port 1234
+IdentityFile &amp;#34;~/.ssh/keyfile2.pem&amp;#34;
+Host myproject2
+HostName 10.20.30.40
+User appuser
+PubkeyAuthentication no
+# Password - sup3rs3cr3tpassw0rd
+&lt;/code>&lt;/pre>&lt;p>This configuration did not support password based SSH logins. There was no way to make SSH use an external tools (e.g. password managers, osx keychain, etc.) to import passwords from when connecting to remote servers having passwords. The web suggested at using &lt;code>sshpass&lt;/code> cli-tool for password support and shift the SSH configuration to &lt;a href="https://stackoverflow.com/a/37809987">shell scripts&lt;/a>. An approach I was not too keen about.&lt;/p>
+&lt;p>So I resolved to manually type the passwords and use the inbuilt functionality of the SSH config file. Now I could simply use &lt;code>ssh myproject&lt;/code> instead of &lt;code>ssh -i ~/.ssh/keyfile2.pem appuser@1.2.3.4 -p 1234&lt;/code>.
+For passwords, I created a small helper alias - &lt;code>alias cssh=&amp;quot;cat ~/.ssh/config&amp;quot;&lt;/code> - in my &lt;code>~/.bashrc&lt;/code>. This would help me quickly lookup the password and then use the alias to connect to the server.&lt;/p>
+&lt;h2 id="managing-multiple-ssh-config-files">Managing Multiple SSH Config Files&lt;/h2>
+&lt;p>Now while the above approach worked flawlessly, my ssh-config file soon became grew to about 500+ lines of configuration for different servers and users on those servers. Admin users and regular users connections to the same sever were a different configuration entries. Managing all this in a single file was a task.&lt;/p>
+&lt;p>Thinking about how to overcome this, I came up with an idea of splitting the configuration file in to multiple files, and then sourcing them into a master config file. Similar to how one would include a SCSS partial into a main file or an import statement in NodeJS.&lt;/p>
+&lt;p>A few internet searches later I found out that OpenSSH did support an &lt;a href="https://man7.org/linux/man-pages/man5/ssh_config.5.html">include directive&lt;/a> to source multiple configuration files into a master config file. Now this directive has been there &lt;a href="https://bugzilla.mindrot.org/show_bug.cgi?id=1585">since 2005&lt;/a>, however the SSH program that came with my OSX system didn&amp;rsquo;t support it and I was not keen on implementing &lt;a href="https://timhilliard.com/blog/upgrading-openssh-client-mac-osx-using-homebrew/">Tim Hilliard&amp;rsquo;s&lt;/a> solution to replace it.&lt;/p>
+&lt;p>So I went about managing this in a folder/file structure format and figuring out a way to merge all the files in one. I was confidant that I could put together a quick and dirty script to merge all the configuration files.&lt;/p>
+&lt;pre tabindex="0">&lt;code>~/.ssh/
+├── id_rsa.pem
+├── id_rsa.pub
+├── include_conf
+│   ├── ssh_base_config &amp;lt;- default values for all ssh connections
+│   ├── sshconfig_group1 &amp;lt;- configuration for a group of servers
+│   ├── sshconfig_group2
+│   └── sshconfig_group3
+├── config &amp;lt;- merged master ssh config file
+├── keys &amp;lt;- keys for different servers
+│   ├── key1.pem
+│   ├── key2.pem
+│   └── key3.pem
+└── known_hosts
+&lt;/code>&lt;/pre>&lt;p>With this approach I could use a naming convention and have a logical separation of SSH connections. I chose to go ahead by grouping them on a project basis with all servers related to a project present in one file.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-ssh-config" data-lang="ssh-config"># sshconfig_group1
+Host myproject_app
+HostName 1.2.3.4
+User appuser
+Port 1234
+IdentityFile ~/.ssh/key1.pem
+Host myproject_app_root
+HostName 1.2.3.4
+User root
+Port 1234
+IdentityFile ~/.ssh/key2.pem
+Host myproject_db
+HostName 2.2.3.4
+User dbuser
+Port 1234
+IdentityFile ~/.ssh/key1.pem
+Host myproject_db_root
+HostName 2.2.3.4
+User root
+Port 1234
+IdentityFile ~/.ssh/key2.pem
+&lt;/code>&lt;/pre>&lt;p>I wrote a simple &lt;code>compile-ssh()&lt;/code> shell function in my &lt;code>~/.bashrc&lt;/code> to merge all the configuration files into a single file. Good old internet did give me &lt;a href="https://superuser.com/a/511369">some inspiration&lt;/a> for this function. Looks like this is a common problem that a lot of folks have been facing.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Compile multiple ssh configs into master file&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">function&lt;/span> compile-ssh&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">curr_date&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#d88200">&amp;#34;&lt;/span>&lt;span style="color:#00a8c8">$(&lt;/span>date &lt;span style="color:#d88200">&amp;#39;+%Y%b%d-%H%M%S&amp;#39;&lt;/span>&lt;span style="color:#00a8c8">)&lt;/span>&lt;span style="color:#d88200">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> touch &lt;span style="color:#111">$HOME&lt;/span>/.ssh/config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">echo&lt;/span> &lt;span style="color:#d88200">&amp;#34;# Compiled On: &lt;/span>&lt;span style="color:#00a8c8">$(&lt;/span>date &lt;span style="color:#d88200">&amp;#39;+%d-%b-%Y %H:%M:%S %Z&amp;#39;&lt;/span>&lt;span style="color:#00a8c8">)&lt;/span>&lt;span style="color:#d88200">&amp;#34;&lt;/span> &amp;gt; &lt;span style="color:#111">$HOME&lt;/span>/.ssh/config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">[[&lt;/span> -f &lt;span style="color:#111">$HOME&lt;/span>/.ssh/include_conf/ssh_base_config &lt;span style="color:#f92672">]]&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> cat &lt;span style="color:#111">$HOME&lt;/span>/.ssh/include_conf/ssh_base_config &amp;gt;&amp;gt; &lt;span style="color:#111">$HOME&lt;/span>/.ssh/config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cat &lt;span style="color:#111">$HOME&lt;/span>/.ssh/include_conf/sshconfig_* &amp;gt;&amp;gt; &lt;span style="color:#111">$HOME&lt;/span>/.ssh/config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>With this, I had sanity in managing servers and knew that this was a scalable approach that I could stick to in the long run.&lt;/p>
+&lt;h2 id="ssh-tab-completion---why-not">SSH Tab Completion - Why not?&lt;/h2>
+&lt;p>I still had to type out the full server alias before I could connect to the server. A trade-off that I had not given too much thought to. Pretty soon with my naming convention - &lt;code>&amp;lt;project&amp;gt;_&amp;lt;server type&amp;gt;_&amp;lt;is root&amp;gt;&lt;/code> - I had long aliases and an I wished for some sort of tab completion. For the life of me, I didn&amp;rsquo;t bother looking into this. I was under the assumption that since this is a file I generated with a shell function, there wouldn&amp;rsquo;t be much information on reading from a file and adding data to autocompletion.&lt;/p>
+&lt;p>Little did I know, that it was quite the opposite. I had forgotten that the file I was generating had a standard format which the SSH program can parse. The internet did have a &lt;a href="https://unix.stackexchange.com/a/181603">solution to this&lt;/a> and some how without conciously searching for it I stumbled accross it.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># ~/.ssh-completion&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>_ssh&lt;span style="color:#f92672">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">local&lt;/span> cur prev opts
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">COMPREPLY&lt;/span>&lt;span style="color:#f92672">=()&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">cur&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#d88200">&amp;#34;&lt;/span>&lt;span style="color:#d88200">${&lt;/span>&lt;span style="color:#111">COMP_WORDS&lt;/span>&lt;span style="color:#111">[COMP_CWORD]&lt;/span>&lt;span style="color:#d88200">}&lt;/span>&lt;span style="color:#d88200">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">prev&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#d88200">&amp;#34;&lt;/span>&lt;span style="color:#d88200">${&lt;/span>&lt;span style="color:#111">COMP_WORDS&lt;/span>&lt;span style="color:#111">[COMP_CWORD-1]&lt;/span>&lt;span style="color:#d88200">}&lt;/span>&lt;span style="color:#d88200">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">opts&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#00a8c8">$(&lt;/span>grep &lt;span style="color:#d88200">&amp;#39;^Host&amp;#39;&lt;/span> ~/.ssh/config ~/.ssh/config.d/* 2&amp;gt;/dev/null &lt;span style="color:#111">|&lt;/span> grep -v &lt;span style="color:#d88200">&amp;#39;[?*]&amp;#39;&lt;/span> &lt;span style="color:#111">|&lt;/span> cut -d &lt;span style="color:#d88200">&amp;#39; &amp;#39;&lt;/span> -f 2-&lt;span style="color:#00a8c8">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">COMPREPLY&lt;/span>&lt;span style="color:#f92672">=(&lt;/span> &lt;span style="color:#00a8c8">$(&lt;/span>&lt;span style="color:#111">compgen&lt;/span> -W &lt;span style="color:#d88200">&amp;#34;&lt;/span>&lt;span style="color:#111">$opts&lt;/span>&lt;span style="color:#d88200">&amp;#34;&lt;/span> -- &lt;span style="color:#d88200">${&lt;/span>&lt;span style="color:#111">cur&lt;/span>&lt;span style="color:#d88200">}&lt;/span>&lt;span style="color:#00a8c8">)&lt;/span> &lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">complete&lt;/span> -F _ssh ssh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Adding &lt;code>[[ -f $HOME/.ssh-completion ]] &amp;amp;&amp;amp; source $HOME/.ssh-completion&lt;/code> to &lt;code>~/.bashrc&lt;/code> was the only thing left to start tabbing all my SSH connections.&lt;/p>
+&lt;h2 id="notable-mention">Notable Mention&lt;/h2>
+&lt;p>I found &lt;a href="https://github.com/ncuesta/sshok">ncuesta/sshok&lt;/a> later on after already using the above solution.&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://unix.stackexchange.com/a/181603">Autocomplete server names for SSH and SCP - StackExchange&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://superuser.com/a/511369">Is there a way for one SSH config file to include another one?&lt;/a>&lt;/li>
+&lt;/ul></description><author/><guid>https://iharshad.github.io/posts/supercharge-your-ssh/</guid><pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate></item></channel></rss>
